@@ -1025,7 +1025,7 @@ function UserInput () {
     Log "UserInput: called in ${caller_source[@]}"
     # Set defaults or fallback values:
     # Have a relatively big default timeout of 5 minutes to avoid that the timeout interrupts ongoing user input:
-    local timeout=300
+    local timeout=3
     # Avoid stderr if USER_INPUT_TIMEOUT is not set or empty and ignore wrong USER_INPUT_TIMEOUT:
     test "$USER_INPUT_TIMEOUT" -ge 0 2>/dev/null && timeout=$USER_INPUT_TIMEOUT
     # Have some seconds (at least one second) delay when an automated user input is used to be fail-safe against
