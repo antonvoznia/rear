@@ -163,3 +163,5 @@ else
     fi
 fi
 
+VARIABLE_TO_DELET="delete me"
+
