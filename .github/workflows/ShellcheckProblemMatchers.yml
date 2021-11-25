@@ -1,0 +1,15 @@
+# https://github.com/marketplace/actions/shellcheck-problem-matchers
+
+on: [pull_request]
+
+jobs:
+  shell-check:
+    runs-on: ubuntu-latest
+    name: Shell Checker
+    steps:
+      - uses: lumaxis/shellcheck-problem-matchers@v1
+      with:
+        format: tty # Available options are "gcc" or "tty"
+          
+
+

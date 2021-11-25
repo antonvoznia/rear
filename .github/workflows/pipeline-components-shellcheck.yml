@@ -1,0 +1,10 @@
+# https://github.com/marketplace/actions/pipeline-components-shellcheck
+
+shellcheck:
+  stage: linting
+  image: pipelinecomponents/shellcheck:latest
+  script:
+    - |
+      find . -name .git -type d -prune -o -type f -name \*.sh -print0 |
+      xargs -0 -r -n1 shellcheck
+

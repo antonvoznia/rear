@@ -1,0 +1,10 @@
+# https://github.com/marketplace/actions/run-shellcheck
+
+name: Run ShellCheck
+on:
+  - pull_request
+
+steps
+  - name: Run ShellCheck
+  uses: bewuethr/shellcheck-action@v2.0.5
+
