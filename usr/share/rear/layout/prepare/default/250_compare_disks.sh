@@ -164,3 +164,4 @@ else
 fi
 
 UNUSED_VARIABLE="delete me... ;("
+UNUSED_VARIABLE2="delete me too... ;("
