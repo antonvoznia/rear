@@ -2,6 +2,25 @@
 #provision:
 #    how: local
 
+provision:
+  - name: machine2
+    how: connect
+    guest: 192.168.124.66
+    user: root
+    password: pswd
+
+  - name: machine1
+    how: connect
+    guest: 192.168.124.252
+    user: root
+    password: pswd
+
+prepare:
+    how: shell
+    where: machine1
+    script: touch /tmp/exists$$
+
 # Use the internal executor
 execute:
     how: tmt
+    where: machine1
