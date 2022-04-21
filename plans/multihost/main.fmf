@@ -1,0 +1,29 @@
+
+provision:
+  - name: client
+    how: connect
+    guest: $client
+    user: root
+    password: pswd
+
+  - name: server
+    how: connect
+    guest: $server
+    user: root
+    password: pswd
+
+prepare:
+    how: shell
+    where: server
+    script:
+        - dnf -y install nfs-utils
+        - mkdir /var/tmp/nfsshare
+        - echo "/var/tmp/nfsshare 192.168.0.0/16(rw,no_root_squash)" >> /etc/exports
+        - systemctl enable --now rpcbind nfs-server
+        - firewall-cmd --add-service=nfs --permanent
+        - firewall-cmd --reload
+
+# Use the internal executor
+execute:
+    how: tmt
+    where: client

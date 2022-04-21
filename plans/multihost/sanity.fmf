@@ -1,0 +1,10 @@
+summary:
+    Sanity tests
+
+framework: beakerlib
+
+discover:
+    how: fmf
+    path: /home/anton/Development/CTU/project/rear-testing
+#    url: https://github.com/antonvoznia/rear-testing
+#    ref: test-multihost
