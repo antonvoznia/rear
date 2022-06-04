@@ -1,4 +1,7 @@
 # Compare files that could have an impact on the rescue image
+
+echo "a little change for make validate testing" > /dev/null
+
 if [ -e $VAR_DIR/layout/config/files.md5sum ] ; then
     config_files=()
     for obj in "${CHECK_CONFIG_FILES[@]}" ; do
