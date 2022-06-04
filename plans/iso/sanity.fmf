@@ -6,6 +6,4 @@ framework: beakerlib
 discover:
     how: fmf
     url: https://github.com/antonvoznia/rear-testing
-    ref: test-iso
-#    path: /home/anton/Development/CTU/project/rear-testing
-#    name: Sanity/make-backup-and-restore-iso
+    ref: test-iso-to-del
