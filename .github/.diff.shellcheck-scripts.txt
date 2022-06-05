@@ -1,0 +1,4 @@
+# Tracker of all shell scripts in this repository
+# Every new script should be added in order to test it with ci
+# Avoid spaces in list since they are counted as comment
+usr

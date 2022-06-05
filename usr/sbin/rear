@@ -666,3 +666,9 @@ fi
 exit $EXIT_CODE
 
 # vim: set et ts=4 sw=4:
+
+echo 'The ReaR diff testing via shell check.'
+local v1=12
+v2=13
+echo "Some code with no affects on the ReaR"
+echo "At least it would be :-)"
