@@ -13,6 +13,7 @@ jobs:
   metadata:
     targets:
       - fedora-34-x86_64
+    env: {REQUEST_TIMEOUT : "20m"}
 specfile_path: packaging/rpm/rear.spec
 synced_files:
 - .packit.yaml
