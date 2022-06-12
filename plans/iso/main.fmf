@@ -1,3 +1,8 @@
+provision:
+    how: connect
+    guest: 192.168.122.39
+    user: root
+    password: pswd
 
 # Use the internal executor
 execute:
