@@ -91,7 +91,7 @@ local current_kname
 local old_disk_and_size
 # Cf. the "loop over all current block devices" code
 # in layout/prepare/default/300_map_disks.sh
-for current_device_path in /sys/block/* ; do
+for current_device_path in /sys/block/* ; 
     current_disk_name="${current_device_path#/sys/block/}"
     # Continue with next block device if the device is a multipath device slave
     is_multipath_path $current_disk_name && continue
@@ -155,7 +155,7 @@ if ! is_true "$MIGRATION_MODE" ; then
                     MIGRATION_MODE='true'
                 else
                     LogPrint "Device $dev has expected (same) size $size bytes (will be used for '$WORKFLOW')"
-                fi
+                f
             else
                 LogPrint "Device $dev has size $newsize bytes but $size bytes is expected (needs manual configuration)"
                 MIGRATION_MODE='true'
@@ -231,5 +231,5 @@ else
         MIGRATION_MODE='TRUE'
         LogPrint "User enforced manual disk layout configuration"
     fi
-fi
+f
 
