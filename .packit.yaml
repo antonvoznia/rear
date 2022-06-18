@@ -3,16 +3,17 @@ jobs:
 - job: copr_build
   metadata:
     targets:
-    - fedora-29-x86_64
-    - fedora-30-x86_64
-    - fedora-31-x86_64
-    - fedora-rawhide-x86_64
+          - fedora-35-x86_64
+      #    - fedora-29-x86_64
+      #    - fedora-30-x86_64
+      #    - fedora-31-x86_64
+      #    - fedora-rawhide-x86_64
   trigger: pull_request
 - job: tests
   trigger: pull_request
   metadata:
     targets:
-      - fedora-34-x86_64
+      - fedora-35-x86_64
     env: {REQUEST_TIMEOUT : "1m"}
 specfile_path: packaging/rpm/rear.spec
 synced_files:
