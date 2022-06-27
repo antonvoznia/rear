@@ -8,4 +8,5 @@ execute:
         - free -h
         - df -h
         - lsblk
-
+        - lsblk -l
+        - lsblk -f
