@@ -4,6 +4,7 @@ execute:
     script:
         - lsblk
         - lsblk -f
+        - lsblk -l
         - free -h
         - uname -a
         - ls -la /
