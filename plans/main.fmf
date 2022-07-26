@@ -9,3 +9,6 @@ execute:
         - uname -a
         - ls -la /
         - ls -la /boot/
+        - ls /boot/grub2/device.map
+        - cat /boot/grub2/device.map
+        - ls /sys/firmware/
