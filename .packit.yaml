@@ -5,6 +5,7 @@ jobs:
     targets:
           - fedora-stable
           - centos-stream-8-x86_64
+          - centos-stream-9-x86_64
   trigger: pull_request
 - job: tests
   trigger: pull_request
@@ -12,6 +13,7 @@ jobs:
     targets:
       - fedora-stable
       - centos-stream-8-x86_64
+      - centos-stream-9-x86_64
 specfile_path: packaging/rpm/rear.spec
 synced_files:
 - .packit.yaml
