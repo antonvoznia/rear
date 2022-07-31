@@ -2,6 +2,7 @@
 execute:
     how: shell
     script:
+        - df -h
         - lsblk
         - lsblk -f
         - lsblk -l
