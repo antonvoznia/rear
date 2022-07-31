@@ -3,14 +3,14 @@ jobs:
 - job: copr_build
   metadata:
     targets:
-          - fedora-36-x86_64
+          - fedora-stable
           - centos-stream-8-x86_64
   trigger: pull_request
 - job: tests
   trigger: pull_request
   metadata:
     targets:
-      - fedora-36-x86_64
+      - fedora-stable
       - centos-stream-8-x86_64
 specfile_path: packaging/rpm/rear.spec
 synced_files:
