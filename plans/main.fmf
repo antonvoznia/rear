@@ -12,4 +12,5 @@ execute:
         - ls /boot/grub2/device.map
         - cat /boot/grub2/device.map
         - ls /sys/firmware/
-        - dnf --help
+        - cat /etc/grub2-efi.cfg
+        - cat /etc/grub2.cfg
