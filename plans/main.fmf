@@ -12,3 +12,4 @@ execute:
         - ls /boot/grub2/device.map
         - cat /boot/grub2/device.map
         - ls /sys/firmware/
+        - dnf --help
