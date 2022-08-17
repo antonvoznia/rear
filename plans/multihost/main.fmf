@@ -1,16 +1,12 @@
 
 provision:
   - name: client
-    how: connect
-    guest: $client
-    user: root
-    password: pswd
+    how: virtual
+    connection: system
 
   - name: server
-    how: connect
-    guest: $server
-    user: root
-    password: pswd
+    how: virtual
+    connection: system
 
 prepare:
     how: shell
