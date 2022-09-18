@@ -4,12 +4,14 @@ jobs:
   metadata:
     targets:
           - fedora-35
+          - fedora-36
   trigger: pull_request
 - job: tests
   trigger: pull_request
   metadata:
     targets:
       - fedora-35
+      - fedora-36
 specfile_path: packaging/rpm/rear.spec
 synced_files:
 - .packit.yaml
