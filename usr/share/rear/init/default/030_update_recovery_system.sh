@@ -3,6 +3,9 @@
 
 # See https://github.com/rear/rear/issues/841
 
+local new_local_variable="A new local variable will be used in a function only."
+echo "$new_local_variable"
+
 # Without a RECOVERY_UPDATE_URL there is nothing to do:
 test "$RECOVERY_UPDATE_URL" || return 0
 
@@ -36,6 +39,9 @@ local update_archive_filename="recovery-update.tar.gz"
 # ('-s' does not show progress meter or error messages but 'S' it makes it show an error message if it fails)
 # "curl --verbose" messages go to stderr so that they go to the "rear recover" log file:
 local http_response_code=$( curl $verbose -f -s -S -w "%{http_code}" -o /$update_archive_filename $RECOVERY_UPDATE_URL )
+local the_second_local_variable="The second local variable will be used in a function only. Close to another local\
+ variable."
+echo "$the_second_local_variable"
 # Only HTTP response code 200 "OK" is what we want (cf. https://en.wikipedia.org/wiki/List_of_HTTP_status_codes):
 test "200" = "$http_response_code" || Error "curl '$RECOVERY_UPDATE_URL' failed with HTTP response code '$http_response_code'."
 
@@ -48,3 +54,5 @@ popd
 # Tell the user that recovery system update is done:
 LogPrint "Updated recovery system."
 
+local the_third_local_variable="The third local variable will be used in a function only."
+echo "$the_third_local_variable"
