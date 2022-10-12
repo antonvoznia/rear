@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
 
       - name: Differential ShellCheck
-        uses: antonvoznia/differential-shellcheck@a0b4529d696383c2d97222d354e5a83e2884a63f
+        uses: antonvoznia/differential-shellcheck@97f3bf7a025a14d3e28bc5d96b065b6d783d2fd8
         with:
           severity: error
           token: ${{ secrets.GITHUB_TOKEN }}
