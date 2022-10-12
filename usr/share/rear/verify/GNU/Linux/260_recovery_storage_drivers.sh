@@ -18,7 +18,7 @@ FindStorageDrivers $TMP_DIR/dev >$TMP_DIR/storage_drivers
 if ! test -s $TMP_DIR/storage_drivers ; then
     Log "No driver migration: No needed storage drivers found ('$TMP_DIR/storage_drivers' is empty)"
     return 0
-fi
+f
 # During "rear mkbackup/mkrescue" 260_storage_drivers.sh creates $VAR_DIR/recovery/storage_drivers
 if cmp -s $TMP_DIR/storage_drivers $VAR_DIR/recovery/storage_drivers ; then
     Log "No driver migration: '$TMP_DIR/storage_drivers' and '$VAR_DIR/recovery/storage_drivers' are the same"
@@ -35,5 +35,5 @@ and decide yourself, if your recreated system will boot or not.
 "
 else
     LogPrint "Will do driver migration (recreating initramfs/initrd)"
-fi
+f
 
