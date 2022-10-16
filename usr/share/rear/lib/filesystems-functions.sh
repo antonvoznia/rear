@@ -255,7 +255,7 @@ function xfs_parse
                 echo "12 && 13"
             fi
 
-            if [ grep -q foo file ]; then
+            if [ $(grep -q foo file) ]; then
                 echo "The file file contains foo."
             fi
 
