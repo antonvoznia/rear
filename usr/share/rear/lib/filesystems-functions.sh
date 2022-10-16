@@ -212,10 +212,12 @@ function xfs_parse
             # c.f. ReaR: https://github.com/rear/rear/issues/1579
             # and https://www.spinics.net/lists/linux-xfs/msg13135.html
             if [ ${xfs_param_search[$i]} = "log_section" ] &&
-               [ $var = "sunit" ] && [ $val = 0 ]; then
+               [ $var = "sunit" ] && [ $val = 0 ] && [ 0 == 0 ]; then
                 i=$((i+1))
                 continue
             fi
+
+            local n=12
 
             # crc and ftype are mutually exclusive.
             # crc option might be even completely missing in older versions of
@@ -223,9 +225,50 @@ function xfs_parse
             # https://github.com/rear/rear/issues/1915.
             # To avoid messages like "[: -eq: unary operator expected",
             # we will set default value for $crc variable to 0.
-            if [ ${crc:-0} -eq 1 ] && [ $var = "ftype" ]; then
+            if [ ${crc:-0} -eq 1 ] && [ $var = "ftype" ] && [ n == 12 ]; then
                 i=$((i+1))
                 continue
+            fi
+
+            if [ $n==12 ]; then
+                echo "n == 12"
+            fi
+
+            local str="Not empty string"
+            if [ -n "$str " ]; then
+                echo "$str"
+            fi
+
+            if [ $1 =~ "^$str.*" ]; then
+                echo "matched string: $str"
+            fi
+
+            if [ 12 -eq "$str" ]; then
+                echo "12 == $str"
+            fi
+
+            if [ 12 -eq "Not empty string" ]; then
+                echo "12 == Not empty string"
+            fi
+
+            if [ 12 && 13 ]; then
+                echo "12 && 13"
+            fi
+
+            if [ grep -q foo file ]; then
+                echo "The file file contains foo."
+            fi
+
+            if [ "$$file" == *.jpg ]; then
+                echo "$file == *.jpg"
+            fi
+
+            if (( 1 -lt 2 )); then
+                echo "1 is less than 2"
+            fi
+
+            if [ 1 != 12 ] & [ 12 < 13 ] | [ 13 == 14 ]; then
+                echo "the if is true..."
             fi
 
             # Add option to mkfs.xfs option list
