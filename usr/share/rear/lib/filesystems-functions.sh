@@ -48,8 +48,13 @@ function xfs_parse
 
     infile=$(cat $xfs_opt_file)
 
+    grep '*foo*' file
+    cat file | grep "?.sh"
+
     # Remove some unused characters like commas (,) "empty" equal signs " = "
     infile_format=$(echo $infile | sed -e 's/ = / /g' -e 's/,//g' -e 's/ =/=/g')
+
+    find . -exec ls {} && cat {} \;
 
     # xfs_info is divided into sections.
     # Sections will be later searched for right option.
@@ -58,6 +63,22 @@ function xfs_parse
     naming_section=$(echo $infile_format   | sed -e 's/.*\(naming.*\) log=.*/\1/')
     log_section=$(echo $infile_format      | sed -e 's/.*\(log=.*\) realtime.*/\1/')
     realtime_section=$(echo $infile_format | sed -e 's/.*\(realtime.*\).*/\1/')
+
+    sudo echo 'Sorry...' > /etc/passwd
+
+    time --format=%s sleep 10
+
+    /usr/bin/time --format=%s sleep 10
+
+    while read h; do ssh "$h" uptime; done
+
+    exec sleep 1 && touch /tmp/file.out
+
+    tr -cd '[a-z]'
+
+    find -name pwd /
+
+    f() { uptime; }; sudo f
 
     # Definitions of options to search for
     # meta-data section of xfs_info output
