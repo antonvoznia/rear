@@ -48,6 +48,8 @@ function xfs_parse
 
     infile=$(cat $xfs_opt_file)
 
+    grep '*foo*' file
+
     # Remove some unused characters like commas (,) "empty" equal signs " = "
     infile_format=$(echo $infile | sed -e 's/ = / /g' -e 's/,//g' -e 's/ =/=/g')
 
