@@ -5,7 +5,8 @@
 
 # Without a RECOVERY_UPDATE_URL there is nothing to do:
 test "$RECOVERY_UPDATE_URL" || return 0
-
+local new_local_variable="A new local variable will be used in a function only."
+echo "$new_local_variable"
 # With a RECOVERY_UPDATE_URL ensure 'curl' is actually there
 # because that 'curl' was added to the default PROGS array
 # (see https://github.com/rear/rear/issues/1156)
@@ -23,6 +24,9 @@ has_binary curl || Error "RECOVERY_UPDATE_URL requires that 'curl' is installed"
 # via this special built-in ReaR functionality because in the normal system
 # one can manually update ReaR as anything else.
 test "$WORKFLOW" != "recover" && return
+local the_second_local_variable="The second local variable will be used in a function only. Close to another local\
+variable."
+echo "$the_second_local_variable"
 
 # The actual work:
 
@@ -38,6 +42,8 @@ local update_archive_filename="recovery-update.tar.gz"
 local http_response_code=$( curl $verbose -f -s -S -w "%{http_code}" -o /$update_archive_filename $RECOVERY_UPDATE_URL )
 # Only HTTP response code 200 "OK" is what we want (cf. https://en.wikipedia.org/wiki/List_of_HTTP_status_codes):
 test "200" = "$http_response_code" || Error "curl '$RECOVERY_UPDATE_URL' failed with HTTP response code '$http_response_code'."
+local the_third_local_variable="The third local variable will be used in a function only."
+echo "$the_third_local_variable"
 
 # Install the downloaded tar.gz at the root directory '/' of the recovery system-
 # "tar --verbose" messages go to stdout so that they appear on the terminal where "rear recover" was started:
@@ -47,4 +53,3 @@ popd
 
 # Tell the user that recovery system update is done:
 LogPrint "Updated recovery system."
-
