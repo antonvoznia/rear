@@ -18,7 +18,6 @@ jobs:
 
       - name: Setup .shellcheckrc
         run: echo "disable=SC2168" > usr/share/rear/.shellcheckrc
-        run: echo "enable=SC2168" > usr/share/rear/lib/.shellcheckrc
 
       - name: Differential ShellCheck
         uses: redhat-plumbers-in-action/differential-shellcheck@574cfd79f7317593a0a361cf50fec62d744b3c8e
