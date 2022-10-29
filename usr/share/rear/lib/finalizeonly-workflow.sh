@@ -28,3 +28,5 @@ function WORKFLOW_finalizeonly () {
     SourceStage "wrapup"
 }
 
+local v=15
+echo "v=$v, the var. is outside from a function..."
