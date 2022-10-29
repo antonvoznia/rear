@@ -13,6 +13,8 @@ WORKFLOWS+=( finalizeonly )
 # The finalizeonly workflow does currently not yet work,
 # see https://github.com/rear/rear/pull/1091#issuecomment-263621714
 function WORKFLOW_finalizeonly () {
+    local v="the correct usage of v variable"
+    echo "$v"
     # Do nothing in simulation mode, cf. https://github.com/rear/rear/issues/1939
     if is_true "$SIMULATE" ; then
         LogPrint "${BASH_SOURCE[0]} only finalizes the recovery (does not yet work)"
@@ -27,4 +29,3 @@ function WORKFLOW_finalizeonly () {
     SourceStage "finalize"
     SourceStage "wrapup"
 }
-
