@@ -1,5 +1,3 @@
-local backup_prog_rc
-
 [ -f $TMP_DIR/force.autorelabel ] && {
 
 	> "${TMP_DIR}/selinux.autorelabel"
@@ -13,19 +11,19 @@ local backup_prog_rc
 		ssh $RSYNC_USER@$RSYNC_HOST "chmod $v 755 ${RSYNC_PATH}/${RSYNC_PREFIX}/backup" 2>/dev/null
 		$BACKUP_PROG -a "${TMP_DIR}/selinux.autorelabel" \
 		 "$RSYNC_USER@$RSYNC_HOST:${RSYNC_PATH}/${RSYNC_PREFIX}/backup/.autorelabel" 2>/dev/null
-		backup_prog_rc=$?
-		if [ $backup_prog_rc -ne 0 ]; then
-			LogPrint "Failed to create .autorelabel on ${RSYNC_PATH}/${RSYNC_PREFIX}/backup [${rsync_err_msg[$backup_prog_rc]}]"
+		_rc=$?
+		if [ $_rc -ne 0 ]; then
+			LogPrint "Failed to create .autorelabel on ${RSYNC_PATH}/${RSYNC_PREFIX}/backup [${rsync_err_msg[$_rc]}]"
 			#StopIfError "Failed to create .autorelabel on ${RSYNC_PATH}/${RSYNC_PREFIX}/backup"
 		fi
 		;;
 
 	(rsync)
-		$BACKUP_PROG -a "${TMP_DIR}/selinux.autorelabel" "${BACKUP_RSYNC_OPTIONS[@]}" \
+		$BACKUP_PROG -a "${TMP_DIR}/selinux.autorelabel" ${BACKUP_RSYNC_OPTIONS[@]} \
 		 "${RSYNC_PROTO}://${RSYNC_USER}@${RSYNC_HOST}:${RSYNC_PORT}/${RSYNC_PATH}/${RSYNC_PREFIX}/backup/.autorelabel"
-		backup_prog_rc=$?
-		if [ $backup_prog_rc -ne 0 ]; then
-			LogPrint "Failed to create .autorelabel on ${RSYNC_PATH}/${RSYNC_PREFIX}/backup [${rsync_err_msg[$backup_prog_rc]}]"
+		_rc=$?
+		if [ $_rc -ne 0 ]; then
+			LogPrint "Failed to create .autorelabel on ${RSYNC_PATH}/${RSYNC_PREFIX}/backup [${rsync_err_msg[$_rc]}]"
 			#StopIfError "Failed to create .autorelabel on ${RSYNC_PATH}/${RSYNC_PREFIX}/backup"
 		fi
 		;;
@@ -37,7 +35,8 @@ local backup_prog_rc
 		# probably using the BACKUP=NETFS workflow instead
 		if [ -d "${opath}" ]; then
 			if [ ! -f "${opath}/selinux.autorelabel" ]; then
-				> "${opath}/selinux.autorelabel" || Error "Failed to create selinux.autorelabel on ${opath}"
+				> "${opath}/selinux.autorelabel"
+				StopIfError "Failed to create selinux.autorelabel on ${opath}"
 			fi
 		fi
 		;;

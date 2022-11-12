@@ -2,9 +2,6 @@
 # This file is part of Relax-and-Recover, licensed under the GNU General
 # Public License. Refer to the included COPYING for full text of license.
 
-local backup_prog_rc
-local backup_log_message
-
 Log "Include list:"
 while read -r ; do
 	Log "  $REPLY"
@@ -14,9 +11,9 @@ while read -r ; do
 	Log " $REPLY"
 done < $TMP_DIR/backup-exclude.txt
 
-LogPrint "Creating $BACKUP_PROG backup on '${RSYNC_HOST}:${RSYNC_PATH}'"
+LogPrint "Creating $BACKUP_PROG archive on '${RSYNC_HOST}:${RSYNC_PATH}'"
 
-ProgressStart "Running backup operation"
+ProgressStart "Running archive operation"
 (
 	case "$(basename $BACKUP_PROG)" in
 
@@ -40,7 +37,7 @@ ProgressStart "Running backup operation"
 			;;
 
 		(*)
-			# no other backup programs foreseen than rsync so far
+			# no other backup programs foreseen then rsync so far
 			:
 			;;
 
@@ -99,7 +96,7 @@ case "$(basename $BACKUP_PROG)" in
 			;;
 			esac
 
-			ProgressInfo "Backed up $((size/1024/1024)) MiB [avg $((size/1024/(SECONDS-starttime))) KiB/sec]"
+			ProgressInfo "Archived $((size/1024/1024)) MiB [avg $((size/1024/(SECONDS-starttime))) KiB/sec]"
 		done
 		;;
 
@@ -116,23 +113,24 @@ ProgressStop
 wait $BackupPID
 
 transfertime="$((SECONDS-starttime))"
-backup_prog_rc="$(cat $TMP_DIR/retval)"
+_rc="$(cat $TMP_DIR/retval)"
 
 sleep 1
 # everyone should see this warning, even if not verbose
-test "$backup_prog_rc" -gt 0 && Error "
-There was an error (${rsync_err_msg[$backup_prog_rc]}) during backup creation.
-Please check the destination and see '$RUNTIME_LOGFILE' for more information.
+test "$_rc" -gt 0 && VERBOSE=1 LogPrint "WARNING !
+There was an error (${rsync_err_msg[$_rc]}) during archive creation.
+Please check the archive and see '$RUNTIME_LOGFILE' for more information.
 
-If the error is related to files that cannot and should not be saved by
-$BACKUP_PROG, they should be excluded from the backup.
+Since errors are often related to files that cannot be saved by
+$BACKUP_PROG, we will continue the $WORKFLOW process. However, you MUST
+verify the backup yourself before trusting it !
 
 "
 
-backup_log_message="$(tail -14 ${TMP_DIR}/${BACKUP_PROG_ARCHIVE}.log)"
-if [ $backup_prog_rc -eq 0 -a "$backup_log_message" ] ; then
-	LogPrint "$backup_log_message in $transfertime seconds."
+_message="$(tail -14 ${TMP_DIR}/${BACKUP_PROG_ARCHIVE}.log)"
+if [ $_rc -eq 0 -a "$_message" ] ; then
+	LogPrint "$_message in $transfertime seconds."
 elif [ "$size" ]; then
-	LogPrint "Backed up $((size/1024/1024)) MiB in $((transfertime)) seconds [avg $((size/1024/transfertime)) KiB/sec]"
+	LogPrint "Archived $((size/1024/1024)) MiB in $((transfertime)) seconds [avg $((size/1024/transfertime)) KiB/sec]"
 fi
 
