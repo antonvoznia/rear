@@ -1,0 +1,35 @@
+---
+
+name: Differential ShellCheck
+on: [pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository checkout
+        uses: actions/checkout@1f9a0c22da41e6ebfa534300ef656657ea2c6707
+        with:
+          fetch-depth: 0
+
+      - name: Setup .shellcheckrc for lib
+        run: echo "enable=SC2168" > usr/share/rear/lib/.shellcheckrc
+
+      - name: Setup .shellcheckrc except lib
+        run: echo "disable=SC2168" > usr/share/rear/.shellcheckrc
+
+      - name: Set default bash into usr/share/rear/.shellcheckrc
+        run: echo "shell=bash" >> usr/share/rear/.shellcheckrc
+
+      - name: Set default bash into usr/share/rear/lib/.shellcheckrc
+        run: echo "shell=bash" >> usr/share/rear/lib/.shellcheckrc
+
+      - name: Differential ShellCheck
+        uses: redhat-plumbers-in-action/differential-shellcheck@574cfd79f7317593a0a361cf50fec62d744b3c8e
+        with:
+          severity: info
+          token: ${{ secrets.GITHUB_TOKEN }}
