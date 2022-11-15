@@ -31,5 +31,5 @@ jobs:
       - name: Differential ShellCheck
         uses: redhat-plumbers-in-action/differential-shellcheck@574cfd79f7317593a0a361cf50fec62d744b3c8e
         with:
-          severity: error
+          severity: info
           token: ${{ secrets.GITHUB_TOKEN }}
