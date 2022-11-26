@@ -3,8 +3,7 @@ if [ "$WORKFLOW" = "checklayout" ] ; then
     return 0
 fi
 
-local obj
-local config_files=()
+config_files=()
 for obj in "${CHECK_CONFIG_FILES[@]}" ; do
     if [ -d "$obj" ] ; then
         config_files+=( $( find "$obj" -type f ) )
