@@ -11,9 +11,13 @@ jobs:
   trigger: pull_request
   metadata:
     targets:
+<<<<<<< HEAD
       - fedora-stable
       - centos-stream-8-x86_64
       - centos-stream-9-x86_64
+=======
+      - fedora-34-x86_64
+>>>>>>> 392954b2 (fix to handle tmt tests)
 specfile_path: packaging/rpm/rear.spec
 synced_files:
 - .packit.yaml
