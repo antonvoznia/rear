@@ -3,15 +3,28 @@ jobs:
 - job: copr_build
   metadata:
     targets:
+<<<<<<< HEAD
           - fedora-stable
           - centos-stream-8-x86_64
           - centos-stream-9-x86_64
+=======
+          - fedora-35-x86_64
+      #    - fedora-29-x86_64
+      #    - fedora-30-x86_64
+      #    - fedora-31-x86_64
+      #    - fedora-rawhide-x86_64
+>>>>>>> 4db43552 (build and run on fedora 35)
   trigger: pull_request
 - job: tests
   trigger: pull_request
   metadata:
     targets:
+<<<<<<< HEAD
       - fedora-34-x86_64
+=======
+      - fedora-35-x86_64
+    env: {REQUEST_TIMEOUT : "1m"}
+>>>>>>> 4db43552 (build and run on fedora 35)
 specfile_path: packaging/rpm/rear.spec
 synced_files:
 - .packit.yaml
