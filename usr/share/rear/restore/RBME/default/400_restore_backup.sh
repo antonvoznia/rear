@@ -2,8 +2,6 @@ if [[ -z "$RBME_BACKUP" ]] ; then
     Error "No RBME backup selected (BACKUP_URL?). Aborting."
 fi
 
-local backup_prog_rc
-
 scheme=$(url_scheme "$BACKUP_URL")
 
 LogPrint "Restoring from backup $RBME_BACKUP."
@@ -45,11 +43,11 @@ transfertime="$((SECONDS-starttime))"
 # harvest return code from background job. The kill -0 $BackupPID loop above should
 # have made sure that this wait won't do any real "waiting" :-)
 wait $BackupPID
-backup_prog_rc=$?
+_rc=$?
 
 sleep 1
-test "$backup_prog_rc" -gt 0 && LogPrint "WARNING !
-There was an error (${rsync_err_msg[$backup_prog_rc]}) while restoring the archive.
+test "$_rc" -gt 0 && LogPrint "WARNING !
+There was an error (${rsync_err_msg[$_rc]}) while restoring the archive.
 Please check '$RUNTIME_LOGFILE' for more information. You should also
 manually check the restored system to see whether it is complete.
 "
