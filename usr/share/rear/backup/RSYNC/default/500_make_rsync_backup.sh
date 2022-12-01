@@ -5,11 +5,6 @@
 local backup_prog_rc
 local backup_log_message
 
-local host path
-
-host="$(rsync_host "$BACKUP_URL")"
-path="$(rsync_path "$BACKUP_URL")"
-
 Log "Include list:"
 while read -r ; do
 	Log "  $REPLY"
@@ -19,27 +14,26 @@ while read -r ; do
 	Log " $REPLY"
 done < $TMP_DIR/backup-exclude.txt
 
-LogPrint "Creating $BACKUP_PROG backup on '${host}:${path}'"
+LogPrint "Creating $BACKUP_PROG backup on '${RSYNC_HOST}:${RSYNC_PATH}'"
 
 ProgressStart "Running backup operation"
 (
 	case "$(basename $BACKUP_PROG)" in
 
 		(rsync)
-			# We are in a subshell, so this change will not propagate to later scripts
 			BACKUP_RSYNC_OPTIONS+=( --one-file-system --delete --exclude-from=$TMP_DIR/backup-exclude.txt --delete-excluded )
 
-			case $(rsync_proto "$BACKUP_URL") in
+			case $RSYNC_PROTO in
 
 				(ssh)
-					Log $BACKUP_PROG "${BACKUP_RSYNC_OPTIONS[@]}" $(cat $TMP_DIR/backup-include.txt) "$(rsync_remote_full "$BACKUP_URL")/backup"
+					Log $BACKUP_PROG "${BACKUP_RSYNC_OPTIONS[@]}" $(cat $TMP_DIR/backup-include.txt) "${RSYNC_USER}@${RSYNC_HOST}:${RSYNC_PATH}/${RSYNC_PREFIX}/backup"
 					$BACKUP_PROG "${BACKUP_RSYNC_OPTIONS[@]}" $(cat $TMP_DIR/backup-include.txt) \
-					"$(rsync_remote_full "$BACKUP_URL")/backup"
+					"${RSYNC_USER}@${RSYNC_HOST}:${RSYNC_PATH}/${RSYNC_PREFIX}/backup"
 					;;
 
 				(rsync)
 					$BACKUP_PROG "${BACKUP_RSYNC_OPTIONS[@]}" $(cat $TMP_DIR/backup-include.txt) \
-					"$(rsync_remote_full "$BACKUP_URL")/backup"
+					"${RSYNC_PROTO}://${RSYNC_USER}@${RSYNC_HOST}:${RSYNC_PORT}/${RSYNC_PATH}/${RSYNC_PREFIX}/backup"
 					;;
 
 			esac
@@ -63,11 +57,11 @@ get_size() {
 }
 
 check_remote_df() {
-	echo $(ssh $(rsync_remote_ssh "$BACKUP_URL") df -P ${path} 2>/dev/null | tail -1 | awk '{print $5}' | sed -e 's/%//')
+	echo $(ssh ${RSYNC_USER}@${RSYNC_HOST} df -P ${RSYNC_PATH} 2>/dev/null | tail -1 | awk '{print $5}' | sed -e 's/%//')
 }
 
 check_remote_du() {
-	x=$(ssh $(rsync_remote_ssh "$BACKUP_URL") du -sb $(rsync_path_full "$BACKUP_URL")/backup 2>/dev/null | awk '{print $1}')
+	x=$(ssh ${RSYNC_USER}@${RSYNC_HOST} du -sb ${RSYNC_PATH}/${RSYNC_PREFIX}/backup 2>/dev/null | awk '{print $1}')
 	[[ -z "${x}" ]] && x=0
 	echo $x
 }
@@ -87,7 +81,7 @@ case "$(basename $BACKUP_PROG)" in
 			case $i in
 
 			300)
-			[[ $(check_remote_df) -eq 100 ]] && Error "Disk is full on system ${host}"
+			[[ $(check_remote_df) -eq 100 ]] && Error "Disk is full on system ${RSYNC_HOST}"
 			;;
 
 			15|30|45|60|75|90|105|120|135|150|165|180|195|210|225|240|255|270|285)
