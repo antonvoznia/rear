@@ -7,11 +7,7 @@ get_size() {
 local backup_prog_rc
 local restore_log_message
 
-local host path
-host="$(rsync_host "$BACKUP_URL")"
-path="$(rsync_path "$BACKUP_URL")"
-
-LogPrint "Restoring $BACKUP_PROG backup from '${host}:${path}'"
+LogPrint "Restoring $BACKUP_PROG backup from '${RSYNC_HOST}:${RSYNC_PATH}'"
 
 ProgressStart "Restore operation"
 (
@@ -19,18 +15,18 @@ ProgressStart "Restore operation"
 
 		(rsync)
 
-			case $(rsync_proto "$BACKUP_URL") in
+			case $RSYNC_PROTO in
 
 				(ssh)
-					Log $BACKUP_PROG "${BACKUP_RSYNC_OPTIONS[@]}" "$(rsync_remote_full "$BACKUP_URL")/backup"/ $TARGET_FS_ROOT/
+					Log $BACKUP_PROG "${BACKUP_RSYNC_OPTIONS[@]}" "${RSYNC_USER}@${RSYNC_HOST}:${RSYNC_PATH}/${RSYNC_PREFIX}/backup"/ $TARGET_FS_ROOT/
 					$BACKUP_PROG "${BACKUP_RSYNC_OPTIONS[@]}" \
-					"$(rsync_remote_full "$BACKUP_URL")/backup"/ \
+					"${RSYNC_USER}@${RSYNC_HOST}:${RSYNC_PATH}/${RSYNC_PREFIX}/backup"/ \
 					$TARGET_FS_ROOT/
 					;;
 
 				(rsync)
 					$BACKUP_PROG "${BACKUP_RSYNC_OPTIONS[@]}" \
-					"$(rsync_remote_full "$BACKUP_URL")/backup"/ $TARGET_FS_ROOT/
+					"${RSYNC_PROTO}://${RSYNC_USER}@${RSYNC_HOST}:${RSYNC_PORT}/${RSYNC_PATH}/${RSYNC_PREFIX}/backup"/ $TARGET_FS_ROOT/
 					;;
 
 			esac

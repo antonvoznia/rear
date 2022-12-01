@@ -1,1 +1,0 @@
-../../RSYNC/default/210_check_rsync_relative_option.sh
