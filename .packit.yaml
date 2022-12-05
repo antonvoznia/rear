@@ -3,15 +3,15 @@ jobs:
 - job: copr_build
   metadata:
     targets:
-          - fedora-35
           - fedora-36
+          - fedora-37
   trigger: pull_request
 - job: tests
   trigger: pull_request
   metadata:
     targets:
-      - fedora-35
       - fedora-36
+      - fedora-37
 specfile_path: packaging/rpm/rear.spec
 synced_files:
 - .packit.yaml
