@@ -1,0 +1,5 @@
+execute:
+    how: shel
+    script:
+    - uname -a
+    - echo "Test has been passed."
